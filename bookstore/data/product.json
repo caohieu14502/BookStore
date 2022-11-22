@@ -1,0 +1,82 @@
+[{
+  "id": 1,
+  "name": "Tâm lý học đại cương",
+  "description": "Trần Thị Thanh Trà",
+  "price": 200000,
+  "image": "images/pn1.png",
+  "category_id": 1
+},
+{
+  "id": 2,
+  "name": "Không là sói, nhưng cũng đừng là cừu",
+  "description": "Cao Hiếu",
+  "price": 180000,
+  "image": "images/pn1.png",
+  "category_id": 1
+},
+  {
+  "id": 3,
+  "name": "Sherlock Homes",
+  "description": "Conan",
+  "price": 170000,
+  "image": "images/pn1.png",
+  "category_id": 2
+},
+  {
+  "id": 4,
+  "name": "Truy tìm dấu vết",
+  "description": "Trương Minh",
+  "price": 230000,
+  "image": "images/pn1.png",
+  "category_id": 2
+}
+,
+  {
+  "id": 5,
+  "name": "Harry Potter và tên ngục tù xứ Az",
+  "description": "Cao Minh",
+  "price": 230000,
+  "image": "images/pn1.png",
+  "category_id": 3
+},
+  {
+  "id": 6,
+  "name": "Khéo ăn nói sẽ có được thiên hạ",
+  "description": "Võ Minh Quang",
+  "price": 230000,
+  "image": "images/pn1.png",
+  "category_id": 4
+},
+  {
+  "id": 7,
+  "name": "Nấu ăn cơ bản",
+  "description": "Cao Minh",
+  "price": 230000,
+  "image": "images/pn1.png",
+  "category_id": 5
+},
+  {
+  "id": 8,
+  "name": "Tư duy phản biện",
+  "description": "Cao Minh",
+  "price": 230000,
+  "image": "images/pn1.png",
+  "category_id": 5
+},
+  {
+  "id": 9,
+  "name": "Cha giàu, cha nghèo",
+  "description": "Cao Minh",
+  "price": 230000,
+  "image": "images/pn1.png",
+  "category_id": 4
+},
+  {
+  "id": 10,
+  "name": "Tối giản thông thái",
+  "description": "Cao Minh",
+  "price": 230000,
+  "image": "images/pn1.png",
+  "category_id": 3
+}
+]

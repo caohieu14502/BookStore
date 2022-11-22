@@ -1,0 +1,65 @@
+.sort {
+    background-color: #ededed;
+    display: flex;
+    height: 48px;
+    align-items: center;
+    padding: 22px;
+    border-radius: 2px;
+}
+
+.sort-btn {
+    min-width: 90px;
+    margin-right: 12px;
+    font-size: 1.4rem;
+
+}
+
+.sort-heading {
+    margin-right: 32px;
+    font-size: 1.5rem;
+    font-weight: 500;
+}
+
+.name-text {
+    height: 3.4rem;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+}
+
+ .book-item{
+    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 10%);
+    margin: 0.9rem 0;
+ }
+
+.book-item:hover {
+    box-shadow: rgb(0 0 0 / 10%) 0px 0px 20px;
+    z-index: 1;
+ }
+
+ .item-buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+ }
+
+
+.item-buttons a{
+    display: block;
+    width: 70%;
+    line-height: 20px;
+    font-size: 16px;
+    margin: 4px 0;
+    border-radius: 16px;
+    background-color: rgb(245,61,45);
+    color: white;
+ }
+
+.item-buttons a:hover{
+    width: 75%;
+    font-size: 18px;
+    background-color: red;
+    color: white;
+ }

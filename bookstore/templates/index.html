@@ -1,0 +1,48 @@
+{% extends 'layout/layout.html' %}
+
+{% block title %} Trang chủ {% endblock %}
+{% block css %}
+<link rel="stylesheet" href="{{url_for('static', filename='css/content.css')}}">
+{% endblock %}
+
+
+{% block content %}
+
+    <div style="display: flex;" class="container">
+    {% block navigation %}
+        {% include 'layout/navigation.html' %}
+    {% endblock %}
+        <div id="content" class="col-lg-10">
+            <div class="sort">
+                <div class="sort-heading">Sắp xếp giá theo:</div>
+
+                <button class="sort-btn bt">Thấp đến cao</button>
+                <button class="sort-btn bt btn-prime">Cao đến thấp</button>
+            </div>
+
+            {% if books %}
+                <div class="row">
+                    {% for b in books %}
+                    <div class="col-md-3 col-sm-12">
+                        <div class="card book-item" style="border: none;">
+                            <img class="card-img-top" src="/static/{{ b.image }}" alt="Card image">
+                            <div class="card-body">
+                                <h4 class="card-title name-text">{{ b.name }}</h4>
+                                <span style="font-size: 1.4rem">{{ b.author }}</span>
+                                <p class="card-text text-danger" style="font-size:14px; font-weight:500;">{{ "{:,.1f}".format(b.price) }} ₫</p>
+                                <span style="font-size: 1rem; color: var(--text-color);">Hàng tồn: 1200</span>
+                                <div class="item-buttons">
+                                    <a href="/books/{{ b.id }}" class="btn" style="background-color: var(--base-color)">Xem chi tiết</a>
+                                    <a href="#" class="btn" >Đặt hàng</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p class="text-danger">Không có sản phẩm nào!</p>
+            {% endif %}
+        </div>
+    </div>
+{% endblock%}
