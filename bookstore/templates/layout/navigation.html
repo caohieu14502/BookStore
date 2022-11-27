@@ -1,3 +1,7 @@
+    {% block js %}
+        <script src="../static/js/main.js"></script>
+    {% endblock %}
+
 <!-- RIGHT - NAVIGATION-->
 <div id="navigation" class="col-lg-2">
     <div class="catagory">
@@ -6,15 +10,26 @@
             Thể Loại
         </h3>
         <ul class="catagory__list">
-
-            <li class="catagory__list-item catagory__list-item--active">
-                <a href="/"> Tất cả sản phẩm </a>
-            </li>
+            {% if index == 0 %}
+                <li class="catagory__list-item  catagory__list-item--active">
+                    <a href="/"> Tất cả sản phẩm </a>
+                </li>
+            {% else %}
+                <li class="catagory__list-item">
+                    <a href="/"> Tất cả sản phẩm </a>
+                </li>
+            {% endif %}
 
             {% for gen in genres %}
-            <li class="catagory__list-item">
-                <a href="/?genre_id={{gen.id}}">{{gen.name}}</a>
-            </li>
+                {% if index == gen.id %}
+                    <li class="catagory__list-item catagory__list-item--active" >
+                        <a href="/?genre_id={{gen.id}}">{{gen.name}}</a>
+                    </li>
+                {% else %}
+                    <li class="catagory__list-item" >
+                        <a href="/?genre_id={{gen.id}}">{{gen.name}}</a>
+                    </li>
+                {% endif %}
             {% endfor %}
         </ul>
     </div>

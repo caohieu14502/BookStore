@@ -1,19 +1,31 @@
 <!--    HEADER-->
     <div class="header-container">
         <div id="header" class="flex-run">
-
-            <span class="logo-shop header">LOGO</span>
+            
+            <a class="logo-shop header" style="
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 15%;"
+                href="/"
+            >
+                <img src="{{url_for('static', filename='images/logo.png')}}" style="width: 64px; height: 64px">
+            </a>
+<!--            <span class="logo-shop header" style="height: 30%">BOOK</span>-->
 
             <span class="header" >
                 <form class="d-flex input-group" style="width: 500px; height: 40px; ">
                     <input
+                      action="/"
+                      name="keyword"
                       type="search"
                       class="form-control"
                       placeholder="Tìm kiếm sách"
                       aria-label="Search"
                       aria-describedby="search-addon"
+                      autocomplete="off"
                     />
-                    <button class="search__btn input-group-text" id="search-addon">
+                    <button class="search__btn input-group-text" id="search-addon" type="submit">
                         <i class="search__btn-icon fas fa-search"></i>
                     </button>
                 </form>

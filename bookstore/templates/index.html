@@ -41,7 +41,24 @@
                     {% endfor %}
                 </div>
             {% else %}
-                <p class="text-danger">Không có sản phẩm nào!</p>
+                <h2 style="text-align: center;" class="text-danger" >Không có sản phẩm nào!</h2>
+            {% endif %}
+
+            {{page}}
+            {% if page > 1 %}
+                <div class="pagetination" style="background-color: #F5F5F5;">
+                    <a href="" class="pagetination-arrow">
+                        <i class="fas fa-angle-left"></i>
+                    </a>
+
+                    {% for idx in range(1, page+1) %}
+                        <a href="/?page={{idx}}" class="pagetination-number">{{idx}}</a>
+                    {% endfor %}
+
+                    <a href="" class="pagetination-arrow">
+                        <i class="fas fa-angle-right"></i>
+                    </a>
+                </div>
             {% endif %}
         </div>
     </div>
