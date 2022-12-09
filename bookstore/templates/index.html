@@ -14,11 +14,25 @@
     {% endblock %}
         <div id="content" class="col-lg-10">
             <div class="sort">
-                <div class="sort-heading">Sắp xếp giá theo:</div>
-
+                <div class="sort-heading">Sắp xếp giá:</div>
                 <button class="sort-btn bt">Thấp đến cao</button>
                 <button class="sort-btn bt btn-prime">Cao đến thấp</button>
+
+                <div style="background:transparent; width:200px; display:block"></div>
+
+                <form action="/" method="get" style="display: flex; align-items: center;">
+                    <div class="sort-heading price_find">Giá từ:</div>
+                    <input type="text" class="price_input" name="from_price">
+                    <div class="sort-heading price_find" >Đến:</div>
+                    <input type="text" class="price_input" name="to_price">
+
+                    <button type="submit" style="border:none;">
+                        <i class="search__btn-icon fas fa-search" ></i>
+                    </button>
+                </form>
+
             </div>
+
 
             {% if books %}
                 <div class="row">
@@ -44,7 +58,6 @@
                 <h2 style="text-align: center;" class="text-danger" >Không có sản phẩm nào!</h2>
             {% endif %}
 
-            {{page}}
             {% if page > 1 %}
                 <div class="pagetination" style="background-color: #F5F5F5;">
                     <a href="" class="pagetination-arrow">

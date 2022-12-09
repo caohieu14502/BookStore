@@ -4,11 +4,11 @@
             
             <a class="logo-shop header" style="
                 display: flex;
-                justify-content: center;
+                justify-content: right;
                 align-items: center;
-                width: 15%;"
-                href="/"
-            >
+                padding-right: 42px;
+                padding-bottom: 10px;"
+                href="/">
                 <img src="{{url_for('static', filename='images/logo.png')}}" style="width: 64px; height: 64px">
             </a>
 <!--            <span class="logo-shop header" style="height: 30%">BOOK</span>-->
@@ -34,11 +34,13 @@
             <span class="login-header">
                 <div class="header__shop-cart">
                     <div class="header__shop-cart-wrap">
-                        <i class="shopping_icon fas fa-shopping-cart"></i>
+                        <a href="/">
+                            <i class="shopping_icon fas fa-shopping-cart"></i>
+                        </a>
                         <!-- <span class="cart-notice">3</span> -->
                     </div>
                 </div>
-                <a href="/" class="login-btn">Đăng nhập</a>
+                <a href="{{url_for('user_register')}}" class="login-btn">Đăng nhập</a>
             </span>
 
         </div>

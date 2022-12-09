@@ -63,3 +63,33 @@
     background-color: red;
     color: white;
  }
+
+ .price_input {
+    font-size: 1.4rem;
+    font-weight: 500;
+    border: 2px;
+    margin: 2px;
+    height: 28px;
+    border-radius: 4px;
+    width: 125px;
+}
+
+.price_input:focus {
+    border-color: blue;
+    outline: none;
+    box-shadow: 0 0 0 0.1rem blue;
+}
+
+.price_find {
+    margin-right: 12px;
+    margin-left: 20px;
+}
+
+#content i {
+    padding-left: 8px;
+    font-size: 20px;
+}
+
+#content i:hover {
+    color: var(--base-color);
+}
