@@ -1,9 +1,11 @@
 #CONTROLLER
 from flask import render_template, request, redirect, url_for
-from bookstore import app
+from bookstore import app, login
 import utils
 import math
+from flask_login import login_user, logout_user
 import cloudinary.uploader
+
 
 @app.route("/")
 def home():
@@ -32,10 +34,11 @@ def home():
                            index=nav_index,
                            page=math.ceil(counter/app.config['PAGE_SIZE']),)
 
+
 @app.route('/register', methods=['get', 'post'])
 def user_register():
     err_msg = ""
-    #trường name trong input sẽ nhảy vào đây
+    # trường name trong input sẽ nhảy vào đây
     if request.method.__eq__('POST'):
         name = request.form.get('name')
         username = request.form.get('username')
@@ -56,7 +59,7 @@ def user_register():
                                password=password,
                                email=email,
                                avatar=avatar_path)
-                return redirect('index.html')
+                return redirect(url_for('user_signin'))
             else:
                 err_msg = 'Mật khẩu KHÔNG khớp'
         except Exception as ex:
@@ -64,10 +67,41 @@ def user_register():
 
     return render_template('register.html', err_msg=err_msg)
 
+
+@app.route('/user-login', methods=['GET', 'POST'])
+def user_signin():
+    err_msg = ''
+    if request.method.__eq__('POST'):
+        username = request.form.get('username')
+        password = request.form.get('password')
+
+        user = utils.check_login(username=username, password=password)
+        if user:
+            login_user(user=user)
+            return redirect(url_for('home'))
+        else:
+            err_msg = 'Thông tin đăng nhập KHÔNG chính xác!!!'
+
+    return render_template('login.html', err_msg=err_msg)
+
+
+@app.route('/user-logout')
+def user_signout():
+    logout_user()
+    return redirect(url_for('user_signin'))
+
+
 @app.route('/books/<int:book_id>')
 def book_detail(book_id):
     book = utils.get_book_by_id(book_id)
     return render_template('details.html', b=book)
 
-if __name__=='__main__':
+
+@login.user_loader
+def user_load(user_id):
+    return utils.get_user_by_id(user_id=user_id)
+
+
+if __name__ == '__main__':
+    from bookstore.admin import *
     app.run(debug=True)

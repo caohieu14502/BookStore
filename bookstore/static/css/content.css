@@ -93,3 +93,49 @@
 #content i:hover {
     color: var(--base-color);
 }
+
+.login-button {
+    background-color: var(--base-color);
+    color:white;
+}
+
+.algin-form-center {
+    display: flex;
+    justify-content: center;
+    algin-items:center;
+    width: 100%;
+    margin-bottom: 60px;
+}
+
+.authen {
+    width : 30%;
+    border-radius : 4px;
+    border : 3px solid var(--base-color);
+    padding : 16px;
+    display: flex;
+    flex-direction: column;
+    algin-items: space-between;
+}
+
+.authen .form-group{
+    margin-bottom: 14px;
+}
+
+.authen label{
+    font-size: 18px;
+}
+
+.authen input{
+    font-size: 16px;
+    margin-bottom: 6px;
+}
+
+.authen .login-button{
+    margin-top: 12px;
+}
+
+.authen a {
+    display: inline-block;
+    color: blue;
+    font-weight: 600;
+}

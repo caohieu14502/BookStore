@@ -4,17 +4,22 @@ from sqlalchemy.orm import relationship
 from bookstore import db, app
 from datetime import datetime
 from enum import Enum as UserEnum
+from flask_login import UserMixin
+
 
 class BaseModel(db.Model):
     __abstract__ = True
     id = Column(Integer, primary_key=True, autoincrement=True)
+
 
 class UserRole(UserEnum):
     ADMIN = 1
     INVENT_MANAGE = 2
     STAFF = 3
     USER = 4
-class User(BaseModel):
+
+
+class User(BaseModel, UserMixin):
     __tablename__ = 'user'
 
     name = Column(String(50), nullable=False)
@@ -28,6 +33,8 @@ class User(BaseModel):
 
     def __str__(self):
         return self.name
+
+
 class Genre(BaseModel):
     __tablename__ = 'genre'
 
@@ -36,6 +43,7 @@ class Genre(BaseModel):
 
     def __str__(self):
         return self.name
+
 
 class Book(BaseModel):
     __tablename__ = 'book'
@@ -47,6 +55,7 @@ class Book(BaseModel):
     active = Column(Boolean, default=True)
     pubic_year = Column(Integer)
     theloai_id = Column(Integer, ForeignKey(Genre.id), nullable=False)
+
 
     def __str__(self):
         return self.name

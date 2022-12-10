@@ -49,7 +49,7 @@
     margin: 0 20px;
 }
 
-.form-control {
+.form-control, .authen label {
     font-size: 1.4rem;
     font-weight: 500;
     border: 2px;
@@ -77,9 +77,9 @@
     border: 1px solid rgb(0, 0, 0, 0.1);
 }
 
-.search__btn:hover {
+.search__btn:hover, .login-button:hover {
     cursor: pointer;
-    background-color: rgb(114,161,229, 0.5);
+    background-color: rgb(114,161,229, 0.8);
     color: white;
 }
 
