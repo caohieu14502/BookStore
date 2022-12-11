@@ -1,16 +1,85 @@
 {% extends 'layout/layout.html' %}
 {% block title %}{{ b.name }}{% endblock %}
 {% block content %}
-  <h1 class="text-center text-info">CHI TIẾT SẢN PHẨM</h1>
-  <br>
-  <div class="row">
-    <div class="col-md-4 col-sm-6">
-      <img src="/static/{{ b.image }}" class="img-fluid" alt="{{ b.name }}" />
+<div class="container">
+      <h1 class="text-center text-info">CHI TIẾT SẢN PHẨM</h1>
+      <br>
+      <div class="row wrapper_detail">
+        <div class="col-md-4 col-sm-6 detail-img_container">
+          <img src="/static/{{ b.image }}" class="img-fluid detail_img" alt="{{ b.name }}" />
+        </div>
+        <div class="col-md-8 col-sm-6">
+          <div>
+              <h1>{{ b.name }}</h1>
+              <p style="font-size: 14px">Tác giả: {{ b.author }}</p>
+              <h3 class="text-danger">Giá: {{ "{:,.1f}".format(b.price) }} VNĐ</h3>
+              <p style="font-size: 14px">Mô tả: </p>
+          </div>
+
+          <div>
+    <!--            Nút thêm vào giỏ hàng ở đây                 -->
+          </div>
+
+
+        </div>
+      </div>
+
+<br>
+<hr>
+<br>
+    {% if current_user.is_authenticated %}
+    <div style="width: 50%; position: relative">
+        <div class="form-group" >
+            <textarea class="form-control" id="commentId" placeholder="Nhập đánh giá của bạn"></textarea>
+        </div>
+        <input type="button"
+               class="sort-btn bt btn-prime"
+               onclick="addComment({{ b.id }})"
+               value="Đánh giá"
+               style="position: relative; left: 82%; margin-top: 16px"
+        >
     </div>
-    <div class="col-md-8 col-sm-6">
-      <h1>{{ b.name }}</h1>
-      <p>{{ b.author }}</p>
-      <h3 class="text-danger">{{ "{:,.1f}".format(b.price) }} VNĐ</h3>
+    {% else %}
+    <div class="form-lable choose-other" style="font-size: 16px; font-weight: 400; margin-top: 8px">
+        <a href="/user-login?next=/books/{{ b.id }}" style="display: inline; color: blue; font-size: 16px;">Đăng nhập</a> để đánh giá.
     </div>
-  </div>
+    {% endif %}
+<br>
+    <div id="commentArea">
+        {% for c in comments %}
+        <hr>
+        <div class="row" style="font-size: 14px">
+            <div class="col-md-12">
+                <div style="padding-bottom: 6px; display: flex; align-items: center">
+                    {% if c.user.avatar != none %}
+                    <img src="{{c.user.avatar}}" width="30px" height="40px" class="img-fluid rounded-circle">
+                    {% else %}
+                    <img src="{{url_for('static', filename='images/flask.png')}}" width="30px" height="30px" class="img-fluid rounded-circle">
+                    {% endif %}
+                    <span style="font-weight: 500; padding-left: 6px">{{c.user.name}}</span>
+                </div>
+
+                    <p style="display: inline-block; width:30px"></p>
+
+                <div  style="display: inline-block;">
+                    <p>{{c.content}}</p>
+                    <p><em class="my-date" style="font-size: 11px">{{c.created_date}}</em></p>
+                </div>
+
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+</div>
+
+<script>
+    window.onload = function() {
+        let d = document.getElementsByClassName('my-date')
+        for (let i = 0; i < d.length; i++)
+            d[i].innerText = moment(d[i].innerText).locale('vi').fromNow();
+    }
+
+</script>
+
 {% endblock %}

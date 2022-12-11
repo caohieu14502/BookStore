@@ -10,26 +10,13 @@
             Thể Loại
         </h3>
         <ul class="catagory__list">
-            {% if index == 0 %}
-                <li class="catagory__list-item  catagory__list-item--active">
+                <li class="catagory__list-item {% if 'genre_id' not in request.args %} catagory__list-item--active {% endif %}">
                     <a href="/"> Tất cả sản phẩm </a>
                 </li>
-            {% else %}
-                <li class="catagory__list-item">
-                    <a href="/"> Tất cả sản phẩm </a>
-                </li>
-            {% endif %}
-
             {% for gen in genres %}
-                {% if index == gen.id %}
-                    <li class="catagory__list-item catagory__list-item--active" >
-                        <a href="/?genre_id={{gen.id}}">{{gen.name}}</a>
-                    </li>
-                {% else %}
-                    <li class="catagory__list-item" >
-                        <a href="/?genre_id={{gen.id}}">{{gen.name}}</a>
-                    </li>
-                {% endif %}
+                <li class="catagory__list-item {% if 'genre_id' in request.args and gen.id == request.args.genre_id|int %} catagory__list-item--active {% endif %}" >
+                    <a href="/?genre_id={{gen.id}}">{{gen.name}}</a>
+                </li>
             {% endfor %}
         </ul>
     </div>

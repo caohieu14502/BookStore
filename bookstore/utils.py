@@ -1,10 +1,13 @@
 # tương tác csdl - MODEL
-from models import Genre, Book, User
+from models import Genre, Book, User, Comment
+from flask_login import current_user
 from bookstore import app, db
 import hashlib
 
+
 def load_genres():
     return Genre.query.all()
+
 
 def load_books(genre_id=None, kw=None, from_price=None, to_price=None, page=1):
 
@@ -23,13 +26,16 @@ def load_books(genre_id=None, kw=None, from_price=None, to_price=None, page=1):
     start = (page - 1) * page_size
     end = start + page_size
 
-    return books.slice(start, end).all()
+    return books .slice(start, end).all()
+
 
 def count_books():
     return Book.query.filter(Book.active.__eq__(True)).count()
 
+
 def get_book_by_id(book_id):
     return Book.query.get(book_id)
+
 
 def add_user(name, username, password, **kwargs):
     password = str(hashlib.md5(password.strip().encode('utf-8')).hexdigest())
@@ -42,6 +48,7 @@ def add_user(name, username, password, **kwargs):
     db.session.add(user)
     db.session.commit()
 
+
 def check_login(username, password):
     if username and password:
         password = str(hashlib.md5(password.strip().encode('utf-8')).hexdigest())
@@ -52,3 +59,23 @@ def check_login(username, password):
 
 def get_user_by_id(user_id):
     return User.query.get(user_id)
+
+
+def add_comment(book_id, content):
+    c = Comment(content=content, book_id=book_id, user=current_user)
+
+    db.session.add(c)
+    db.session.commit()
+
+    return c
+
+
+def get_comments(page=1, book_id=None):
+
+    page_size = app.config['COMMENT_SIZE']
+    start = (page - 1) * page_size
+    end = start + page_size
+
+    c = Comment.query.filter(Comment.book_id == book_id)
+
+    return c.order_by(-Comment.id).slice(start, end).all()

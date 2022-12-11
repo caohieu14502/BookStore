@@ -30,6 +30,7 @@ class User(BaseModel, UserMixin):
     active = Column(Boolean, default=True)
     joined_date = Column(DateTime, default=datetime.now())
     user_role = Column(Enum(UserRole), default=UserRole.USER)
+    comments = relationship('Comment', backref='user', lazy=True)
 
     def __str__(self):
         return self.name
@@ -53,12 +54,23 @@ class Book(BaseModel):
     price = Column(Float, default=0)
     image = Column(String(200))
     active = Column(Boolean, default=True)
-    pubic_year = Column(Integer)
+    description = Column(String(500))
+    stock = Column(Integer, default=0) #hàng tồn kho
     theloai_id = Column(Integer, ForeignKey(Genre.id), nullable=False)
-
+    comments = relationship('Comment', backref='book', lazy=True)
 
     def __str__(self):
         return self.name
+
+
+class Comment(BaseModel):
+    content = Column(String(255), nullable=False)
+    book_id = Column(Integer, ForeignKey(Book.id), nullable=False)
+    user_id = Column(Integer, ForeignKey(User.id), nullable=False)
+    created_date = Column(DateTime, default=datetime.now())
+
+    def __str__(self):
+        return self.content
 
 
 with app.app_context():

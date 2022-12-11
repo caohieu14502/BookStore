@@ -40,7 +40,7 @@
 
 .login-header div {
     display: flex;
-    align-content: center;
+    align-items: center;
     text-align: center;
 }
 
@@ -258,4 +258,61 @@ footer {
     top: 50%;
     left: -2px;
     transform: translateY(-60%);
+}
+
+.user-info {
+    position: relative;
+}
+
+.user-info::after {
+    content: "";
+    position: absolute;
+    height: 8px;
+    width: 100%;
+    bottom: -4px;
+    left: 0;
+    background: transparent;
+}
+
+
+.user_logout:hover {
+    color: rgba(245,61,45, 0.8);
+}
+
+.user-info-expand div{
+    bottom:-62px;
+    left:0;
+    right:0;
+    margin-left:auto;
+    margin-right:auto;
+    width: 170px;
+    position: absolute;
+    z-index: 9999;
+    border-radius: 6px;
+    display: flex;
+    flex-direction: column;
+    padding: 6px;
+    display: none;
+    background-color: white;
+    box-shadow: rgb(0 0 0 / 10%) 0px 0px 20px;
+ }
+
+.user-info:hover {
+    cursor: pointer;
+}
+
+.user-info-expand .user_info:hover{
+    color: rgb(114,161,229, 0.6);
+}
+
+.user-info:hover .user-info-expand div{
+    display:block;
+}
+
+.user-info-expand .user_info {
+    color:var(--base-color);
+}
+
+.user_logout {
+    color: #dc3545;
 }

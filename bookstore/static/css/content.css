@@ -139,3 +139,13 @@
     color: blue;
     font-weight: 600;
 }
+
+.detail_img {
+    width: 250px;
+    height: 400px;
+}
+
+.detail-img_container {
+   display: flex;
+   justify-content: space-around;
+}
