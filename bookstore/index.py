@@ -139,12 +139,21 @@ def add_comment():
 
 
 @app.route('/inventory')
-def invent_home():
-    book = utils.load_books()
-    gen = utils.load_genres()
+def inventory():
 
+    genres = utils.load_genres()
+    books = utils.get_hang_ton_co_the_nhap()
+    quy_dinh = utils.read_quy_dinh()
 
+    min_num = 300
+    for j in quy_dinh:
+        if j['id'] == 2:
+            min_num = j['value']
 
+    return render_template('inventory/inventory.html',
+                           books=books,
+                           genres=genres,
+                           min_num=min_num)
 
 
 if __name__ == '__main__':

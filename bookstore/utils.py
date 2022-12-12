@@ -1,6 +1,7 @@
 # tương tác csdl - MODEL
 from models import Genre, Book, User, Comment
 from flask_login import current_user
+import json
 from bookstore import app, db
 import hashlib
 
@@ -79,3 +80,17 @@ def get_comments(page=1, book_id=None):
     c = Comment.query.filter(Comment.book_id == book_id)
 
     return c.order_by(-Comment.id).slice(start, end).all()
+
+def read_quy_dinh():
+    with open('data/quy_dinh_mua_ban.json', "r", encoding='utf8') as f:
+        return json.load(f)
+
+def get_hang_ton_co_the_nhap():
+    data = read_quy_dinh()
+
+    min_num = 300
+    for j in data:
+        if j['id'] == 2:
+            min_num = j['value']
+
+    return Book.query.filter(Book.stock.__le__(min_num)).all()

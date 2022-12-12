@@ -1,0 +1,18 @@
+[{
+  "id": 1,
+  "description": "Lượng nhập tối thiểu",
+  "value": 150
+},
+{
+  "id": 2,
+  "description": "Lượng sách bắt đầu có thể nhập",
+  "value": 300
+},
+  {
+    "id": 3,
+    "description": "Thời gian tối đa để nhận sách",
+    "value": 48
+  }
+]
+
+

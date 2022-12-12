@@ -1,0 +1,58 @@
+{% extends 'layout/layout.html' %}
+
+{% block header %}
+    
+{% endblock %}
+{% block content %}
+        <h1 class="text-danger text-center">Nhap sach</h1>
+
+        <h3>Danh sach Sách có thể nhập</h3>
+        <hr>
+        <h1 class="text-center">Phiếu nhập sách</h1>
+        <p class="text-center my-date-inventory" style="font-size: 12px">Ngày nhập: </p>
+        <div class="container mt-3" style="font-size: 16px">
+          <table class="table">
+            <thead>
+              <tr>
+                <th></th>
+                <th class="text-center">STT</th>
+                <th class="text-center">Sách</th>
+                <th class="text-center">Thể loại</th>
+                <th class="text-center">Tác giả</th>
+                <th class="text-center">Hàng tồn</th>
+                <th class="text-center">Số lượng nhập</th>
+              </tr>
+            </thead>
+            <tbody id="addBookArea">
+            {% for b in books%}
+              <tr id="{{b.id}}">
+                <td><input type="checkbox" name="{{b.id}}" onchange="checkBox(this)"></td>
+                <td class="text-center">0</td>
+                <td>{{b.name}}</td>
+                <td class="text-center">{{ genres[b.theloai_id - 1] }}</td>
+                <td class="text-center">{{b.author}}</td>
+                <td class="text-center">{{b.stock}}</td>
+                <td class="text-center">
+                    <input type="number" value="{{min_num}}" min="{{min_num}}" disabled>
+                </td>
+              </tr>
+            {% endfor %}
+            </tbody>
+          </table>
+        </div>
+
+{% endblock %}
+
+{% block js %}
+<script>
+    function checkBox(element) {
+        let id = element.getAttribute("name")
+        let currentElement = document.getElementById(id)
+        if($(element).is(":checked")) {
+            currentElement.lastElementChild.firstElementChild.removeAttribute("disabled")
+        } else {
+            currentElement.lastElementChild.firstElementChild.setAttribute("disabled")
+        }
+    }
+</script>
+{% endblock %}
