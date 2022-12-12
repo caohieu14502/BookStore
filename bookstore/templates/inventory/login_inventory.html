@@ -1,0 +1,35 @@
+{% extends 'layout/layout.html' %}
+
+{% block title %} Đăng nhập Quản lý kho{% endblock %}
+{% block css %}
+<link rel="stylesheet" href="{{url_for('static', filename='css/content.css')}}">
+{% endblock %}
+
+
+{% block header %}
+
+{% endblock %}
+
+
+{% block content %}
+  <h1 class="text-center text-danger" style="margin-bottom: 20px">Đăng nhập Quản lý kho</h1>
+
+{% if err_msg %}
+<div class="alert alert-danger text-center">
+  <h4>{{ err_msg }}</h4>
+</div>
+{% endif %}
+  <div class="algin-form-center">
+  <form method="post" action="{{url_for('signin_inventory')}}" class="authen">
+    <div class="form-group">
+      <label for="username" class="form-lable">Tên đăng nhập</label>
+      <input type="text" class="form-control" id="username" name="username" placeholder="Nhập Tên đăng nhập" required>
+    </div>
+    <div class="form-group">
+      <label for="password" class="form-lable">Mật khẩu</label>
+      <input type="password" class="form-control" id="password" name="password" placeholder="Nhập Mật khẩu" required>
+    </div>
+    <input type="submit" value="Đăng nhập" class="btn login-button">
+  </form>
+    </div>
+{% endblock %}

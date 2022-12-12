@@ -1,9 +1,10 @@
 # tương tác csdl - MODEL
-from models import Genre, Book, User, Comment
+from models import Genre, Book, User, Comment, PhieuNhapSach, ChiTietNhapSach, UserRole
 from flask_login import current_user
 import json
 from bookstore import app, db
 import hashlib
+
 
 
 def load_genres():
@@ -50,12 +51,13 @@ def add_user(name, username, password, **kwargs):
     db.session.commit()
 
 
-def check_login(username, password):
+def check_login(username, password, role=UserRole.USER):
     if username and password:
         password = str(hashlib.md5(password.strip().encode('utf-8')).hexdigest())
 
         return User.query.filter(User.username.__eq__(username.strip()),
-                                 User.password.__eq__(password)).first()
+                                 User.password.__eq__(password),
+                                 User.user_role.__eq__(role)).first()
 
 
 def get_user_by_id(user_id):
@@ -94,3 +96,17 @@ def get_hang_ton_co_the_nhap():
             min_num = j['value']
 
     return Book.query.filter(Book.stock.__le__(min_num)).all()
+
+def cap_nhat_hang_ton(id, number):
+
+    book_to_update = Book.query.get_or_404(id)
+    book_to_update.stock += int(number)
+
+    try:
+       db.session.commit()
+       return True
+    except:
+       return False
+
+
+

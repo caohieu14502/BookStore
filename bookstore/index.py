@@ -5,6 +5,8 @@ from flask import render_template, request, redirect, url_for, session, jsonify
 from bookstore import app, login
 import utils
 import math
+from models import UserRole
+from datetime import date
 from flask_login import login_user, logout_user, login_required, current_user
 import cloudinary.uploader
 
@@ -114,7 +116,7 @@ def user_load(user_id):
 
 
 @app.route('/api/comments', methods=['post', 'get'])
-# @login_required
+@login_required
 def add_comment():
     data = request.json
     content = data.get('content')
@@ -138,8 +140,23 @@ def add_comment():
             }}
 
 
-@app.route('/inventory')
+@app.route('/inventory', methods=['post', 'get'])
 def inventory():
+    msg = ''
+    if request.method.__eq__('POST'):
+        checkboxes = request.form.getlist('book')
+        numbers = request.form.getlist('number')
+        if checkboxes:
+            x = 0
+            for c in checkboxes:
+                mess = utils.cap_nhat_hang_ton(c, numbers[++x])
+
+            if mess:
+                msg = 'Cập nhật thành công'
+            else:
+                msg = 'Đã xảy ra lỗi, vui lòng thử lại sau'
+
+        redirect(url_for('inventory'))
 
     genres = utils.load_genres()
     books = utils.get_hang_ton_co_the_nhap()
@@ -150,10 +167,32 @@ def inventory():
         if j['id'] == 2:
             min_num = j['value']
 
+
     return render_template('inventory/inventory.html',
                            books=books,
                            genres=genres,
-                           min_num=min_num)
+                           min_num=min_num,
+                           date=date.today(),
+                           msg=msg)
+
+
+@app.route('/inventory-login', methods=['post', 'get'])
+def signin_inventory():
+    if request.method == 'POST':
+        username = request.form.get('username')
+        password = request.form.get('password')
+
+        user = utils.check_login(username=username,
+                                 password=password,
+                                 role=UserRole.INVENT_MANAGE)
+        if user:
+            login_user(user=user)
+
+        return redirect('/inventory')
+
+    return render_template('inventory/login_inventory.html')
+
+
 
 
 if __name__ == '__main__':

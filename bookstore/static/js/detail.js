@@ -40,4 +40,8 @@ function addComment(bookId) {
         })
     }
     document.getElementById('commentId').value = ""
+
+
+
+    
 }

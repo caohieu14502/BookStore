@@ -83,6 +83,7 @@ class PhieuNhapSach(BaseModel):
     user_id = Column(Integer, ForeignKey(User.id), nullable=False)
     details = relationship('ChiTietNhapSach', backref='phieu_nhap_sach', lazy=True)
 
+
 class ChiTietNhapSach(db.Model):
     __tablename__ = 'chi_tiet_nhap_sach'
 

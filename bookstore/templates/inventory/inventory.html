@@ -1,16 +1,33 @@
 {% extends 'layout/layout.html' %}
 
-{% block header %}
-    
+{% block title %}
+    Quản lí kho
 {% endblock %}
-{% block content %}
-        <h1 class="text-danger text-center">Nhap sach</h1>
 
-        <h3>Danh sach Sách có thể nhập</h3>
+{% block header %}
+
+{% endblock %}
+
+
+{% block content %}
+        <h1 class="text-danger text-center" style="font-size: 36px;">Quản lý kho</h1>
+        {% if current_user.is_authenticated%}
+        {% if msg %}
+            {% if msg.startswith('Đ') %}
+            <div class="alert alert-danger text-center">
+            {% else%}
+            <div class="alert alert-success alert-success text-center">
+            {% endif %}
+                  <h4>{{ msg }}</h4>
+            </div>
+        {% endif %}
         <hr>
+        <p >Danh sách có thể nhập đều ở dưới</p>
         <h1 class="text-center">Phiếu nhập sách</h1>
-        <p class="text-center my-date-inventory" style="font-size: 12px">Ngày nhập: </p>
+        <p class="text-center my-date-inventory" style="font-size: 14px; margin: 8px 0;">Ngày nhập: <span class="my-date-book">{{date}}</span></p>
         <div class="container mt-3" style="font-size: 16px">
+
+        <form action="/inventory" method="post">
           <table class="table">
             <thead>
               <tr>
@@ -24,35 +41,48 @@
               </tr>
             </thead>
             <tbody id="addBookArea">
+            {% set count = namespace(value=0) %}
             {% for b in books%}
+            {% set count.value = count.value + 1 %}
               <tr id="{{b.id}}">
-                <td><input type="checkbox" name="{{b.id}}" onchange="checkBox(this)"></td>
-                <td class="text-center">0</td>
+                <td><input type="checkbox" name="book" value="{{b.id}}" onchange="checkBox(this)"></td>
+                <td class="text-center">{{ count.value }}</td>
                 <td>{{b.name}}</td>
                 <td class="text-center">{{ genres[b.theloai_id - 1] }}</td>
                 <td class="text-center">{{b.author}}</td>
                 <td class="text-center">{{b.stock}}</td>
                 <td class="text-center">
-                    <input type="number" value="{{min_num}}" min="{{min_num}}" disabled>
+                    <input type="number" name="number" value="{{min_num}}" min="{{min_num}}" disabled>
                 </td>
               </tr>
             {% endfor %}
             </tbody>
           </table>
+                <button class="bt btn-prime" type="submit">Nhập</button>
+        </form>
         </div>
-
+        {% else %}
+                <div style="display: flex; font-size: 20px;"> <a href="{{url_for('signin_inventory')}}" style="color: blue;">Đăng nhập </a> <span> với tư cách quản lý kho để nhập sách</span></div>
+        {% endif %}
 {% endblock %}
 
 {% block js %}
 <script>
     function checkBox(element) {
-        let id = element.getAttribute("name")
+        let id = element.getAttribute("value")
         let currentElement = document.getElementById(id)
         if($(element).is(":checked")) {
             currentElement.lastElementChild.firstElementChild.removeAttribute("disabled")
         } else {
-            currentElement.lastElementChild.firstElementChild.setAttribute("disabled")
+            currentElement.lastElementChild.firstElementChild.setAttribute('disabled', '')
         }
     }
+
+    window.onload = function() {
+        let d = document.getElementsByClassName('my-date-book')
+        for (let i = 0; i < d.length; i++)
+            d[i].innerText = moment(d[i].innerText).locale('vi').format('LL');
+    }
+
 </script>
 {% endblock %}
