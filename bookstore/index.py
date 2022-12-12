@@ -4,6 +4,7 @@ import distutils
 from flask import render_template, request, redirect, url_for, session, jsonify
 from bookstore import app, login
 import utils
+import json
 import math
 from models import UserRole
 from datetime import date
@@ -94,6 +95,21 @@ def user_signin():
     return render_template('login.html', err_msg=err_msg)
 
 
+@app.route('/admin-login', methods=['post'])
+def signin_admin():
+    username = request.form.get('username')
+    password = request.form.get('password')
+
+    user = utils.check_login(username=username,
+                             password=password,
+                             role=UserRole.ADMIN)
+    if user:
+        login_user(user=user)
+
+    return redirect('/admin')
+
+
+
 @app.route('/user-logout')
 def user_signout():
     logout_user()
@@ -108,6 +124,85 @@ def book_detail(book_id):
     return render_template('details.html',
                            comments=comments,
                            b=book)
+
+
+
+@app.route('/api/update-cart', methods=['put'])
+def update_cart():
+    data = request.json
+    id = str(data.get('id'))
+    quantity = data.get('quantity')
+
+    cart = session.get('cart')
+    if cart and id in cart:
+        cart[id]['quantity'] = quantity
+        session['cart'] = cart
+
+    return jsonify(utils.count_cart(cart))
+
+
+@app.route('/api/delete-cart/<book_id>', methods=['delete'])
+def delete_cart(book_id):
+    cart = session.get('cart')
+
+    if cart and book_id in cart:
+        del cart[book_id]
+        session['cart'] = cart
+
+    return jsonify(utils.count_cart(cart))
+
+
+
+@app.route('/api/pay', methods=['POST'])
+@login_required
+def pay():
+    try:
+        utils.add_receipt(session.get('cart'))
+        del session['cart']
+    except:
+        return jsonify({'code': 400})
+
+    return jsonify({'code': 200})
+
+
+@app.context_processor
+def common_reponse():
+    return {
+        'cart_stats' : utils.count_cart(session.get('cart'))
+    }
+
+@app.route('/cart')
+def cart():
+    return render_template('cart.html',
+                           stats=utils.count_cart(session.get('cart')))
+
+
+@app.route('/api/add-cart', methods=['POST'])
+def add_to_cart():
+    data = request.json
+    id = str(data.get('id'))
+    name = data.get('name')
+    price = data.get('price')
+
+    cart = session.get('cart')
+    if not cart:
+        cart = {}
+
+    if id in cart:
+        cart[id]['quantity'] = cart[id]['quantity'] + 1
+    else:
+        cart[id] = {
+            'id': id,
+            'name': name,
+            'price': price,
+            'quantity': 1
+        }
+
+    session['cart'] = cart
+
+    return jsonify(utils.count_cart(cart))
+
+
 
 
 @login.user_loader

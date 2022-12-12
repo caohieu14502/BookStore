@@ -34,10 +34,10 @@
             <span class="login-header">
                 <div class="header__shop-cart">
                     <div class="header__shop-cart-wrap">
-                        <a href="/">
+                        <a href="{{url_for('cart')}}">
                             <i class="shopping_icon fas fa-shopping-cart"></i>
                         </a>
-                        <!-- <span class="cart-notice">3</span> -->
+                        <span class="cart-notice badge badge-info" >{{cart_stats.total_quantity}}</span>
                     </div>
                 </div>
                 {% if current_user.is_authenticated%}

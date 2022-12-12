@@ -3,14 +3,6 @@
     --base-color: rgb(114,161,229);
 }
 
-html {
-    font-size: 62.5%;
-    line-height: 1.6rem;
-    font-family: 'Roboto', sans-serif;
-    box-sizing: border-box;
-    scroll-behavior: smooth;
-}
-
  body, .row {
      background-color: #F5F5F5;
  }
@@ -24,26 +16,6 @@ html {
 }
 
 
-@keyframes fadeout {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
-}
-
-
-@keyframes scaleout {
-    from {
-        opacity: 0;
-        transform: scale(0);
-    }
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
-}
 
 .bt {
     border-radius: 4px;
@@ -64,22 +36,6 @@ html {
 .bt.btn-prime {
     background-color: var(--base-color);
     color: #fff;
-}
-
-
-@media (min-width: 992px) {
-    .container, .container-lg, .container-md, .container-sm {
-        max-width: 85%;
-    }
-}
-
-@media (min-width: 992px) {
-    #navigation.col-lg-2 {
-        width: 17.6667%;
-    }
-    #navigation.col-lg-10 {
-        width: 82.3333%;
-    }
 }
 
 .flex-run {

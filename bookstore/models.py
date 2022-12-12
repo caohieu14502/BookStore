@@ -2,7 +2,7 @@
 from sqlalchemy import Column, DateTime, Float, Enum, Integer, String, Boolean, ForeignKey
 from sqlalchemy.orm import relationship
 from bookstore import db, app
-from datetime import datetime
+from datetime import datetime, timedelta
 from enum import Enum as UserEnum
 from flask_login import UserMixin
 
@@ -32,7 +32,7 @@ class User(BaseModel, UserMixin):
     user_role = Column(Enum(UserRole), default=UserRole.USER)
     comments = relationship('Comment', backref='user', lazy=True)
     phieu_nhap_sach = relationship('PhieuNhapSach', backref='user', lazy=True)
-
+    receipts = relationship('Receipt', backref='user', lazy=True)
 
     def __str__(self):
         return self.name
@@ -90,6 +90,17 @@ class ChiTietNhapSach(db.Model):
     phieu_nhap_sach_id = Column(Integer, ForeignKey(PhieuNhapSach.id), nullable=False, primary_key=True)
     book_id = Column(Integer, ForeignKey(Book.id), nullable=False, primary_key=True)
     quantity = Column(Integer, default=150)
+
+class Receipt(BaseModel):
+    created_date = Column(DateTime, default=datetime.now())
+    user_id = Column(Integer, ForeignKey(User.id), nullable=False)
+    details = relationship('ReceiptDetails', backref='receipt', lazy=True)
+
+class ReceiptDetails(db.Model):
+    receipt_id = Column(Integer, ForeignKey(Receipt.id), nullable=False, primary_key=True)
+    book_id = Column(Integer, ForeignKey(Book.id), nullable=False, primary_key=True)
+    quantity = Column(Integer, default=0)
+    unit_price = Column(Float, default=0)
 
 
 

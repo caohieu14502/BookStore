@@ -47,7 +47,7 @@
                                 <span style="font-size: 1rem; color: var(--text-color);">Hàng tồn: {{ b.stock }}</span>
                                 <div class="item-buttons">
                                     <a href="/books/{{ b.id }}" class="btn" style="background-color: var(--base-color)">Xem chi tiết</a>
-                                    <a href="#" class="btn" >Thêm vào giỏ</a>
+                                    <a href="#" class="btn" onclick="addToCart({{ b.id }}, '{{ b.name }}', {{b.price}})">Thêm vào giỏ</a>
                                 </div>
                             </div>
                         </div>
